@@ -3,6 +3,7 @@ package com.ubaya.anmp_uts
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.ubaya.anmp_uts.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setOnItemSelectedListener {
             binding.viewPager.currentItem = when(it.itemId){
                 R.id.itemHome -> 0
-                R.id.itemPref -> 1
+                R.id.itemPrefs -> 1
                 else -> 0
             }
             true
