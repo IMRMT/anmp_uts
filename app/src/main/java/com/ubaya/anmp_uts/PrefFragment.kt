@@ -22,7 +22,11 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import org.json.JSONObject
+import java.util.concurrent.TimeUnit
 
 
 class PrefFragment : Fragment() {
@@ -99,14 +103,11 @@ class PrefFragment : Fragment() {
                     // Memeriksa apakah password baru dan konfirmasi password sama
                     if (newPass == confPass) {
 
-
                         // Panggil web service untuk mengubah password
                         val idUser = shared.getInt("ID", 0) // Mengambil ID pengguna dari SharedPreferences
                         Log.d("changePass", "ID Pengguna: $idUser")
 
-
                         changePassword(idUser, oldPass, newPass)
-
                     } else {
                         throw Exception("Password baru dan konfirmasi password tidak sesuai")
                     }
