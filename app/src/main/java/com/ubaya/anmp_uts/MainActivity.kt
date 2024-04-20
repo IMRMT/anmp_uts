@@ -17,26 +17,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        binding = ActivityMainBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-//        fragment.add(BeritaListFragment())// berita list already sent from main activty
-//        fragment.add(PrefFragment())
-//
-//        binding.viewPager.adapter = MyAdapter(this, fragment)
-//        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-//            override fun onPageSelected(position: Int) {
-//                binding.bottomNav.selectedItemId = binding.bottomNav.menu.getItem(position).itemId
-//            }
-//        })
-//
-//        binding.bottomNav.setOnItemSelectedListener {
-//            binding.viewPager.currentItem = when(it.itemId){
-//                R.id.itemHome -> 0
-//                R.id.itemPrefs -> 1
-//                else -> 0
-//            }
-//            true
-//        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

@@ -31,7 +31,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun registerUser() {
-        val name = binding.txtUserSignUp.text.toString()
+        val username = binding.txtUserSignUp.text.toString()
         val password = binding.txtPassSignUp.text.toString()
 
         val q = Volley.newRequestQueue(this)
@@ -53,12 +53,14 @@ class SignUpActivity : AppCompatActivity() {
             { error ->
                 // Handle errors or exceptions here
                 Log.e("RegisterError", error.printStackTrace().toString())
-                Toast.makeText(this, "Error registering user", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
         ) {
             override fun getParams(): MutableMap<String, String>? {
                 val params = HashMap<String, String>()
-                params["name"] = name
+                params["username"] = username
                 params["password"] = password
                 return params
             }

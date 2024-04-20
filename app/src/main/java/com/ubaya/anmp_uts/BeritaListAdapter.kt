@@ -36,7 +36,7 @@ class BeritaListAdapter(val beritaList:ArrayList<Berita>): RecyclerView.Adapter<
     override fun onBindViewHolder(holder: BeritaViewHolder, position: Int) {
         holder.binding.txtTitle.text = beritaList[position].title
         holder.binding.txtName.text = beritaList[position].author
-        holder.binding.txtDesc.text = beritaList[position].desc
+        holder.binding.txtDesc.text = beritaList[position].descript
         holder.binding.txtGenre.text = beritaList[position].genre
         holder.binding.txtId.text = beritaList[position].id.toString()
 
@@ -51,7 +51,7 @@ class BeritaListAdapter(val beritaList:ArrayList<Berita>): RecyclerView.Adapter<
         picasso.listener { picasso, uri, exception ->
             exception.printStackTrace()
         }
-        picasso.build().load(beritaList[position].url)
+        picasso.build().load(beritaList[position].images)
             .into(holder.binding.imageView, object: Callback {
                 override fun onSuccess() {
                     holder.binding.progressImage.visibility = View.INVISIBLE

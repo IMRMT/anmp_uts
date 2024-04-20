@@ -29,6 +29,7 @@ class BeritaViewModel(application: Application): AndroidViewModel(application) {
         Log.d("CEKMASUK","masukvolley")
         queue = Volley.newRequestQueue(getApplication())
         val url = "http://10.0.2.2/berita/beritas.json"
+//        val url = "http://127.0.0.1/anmp_uts/read-cerita.php"
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {

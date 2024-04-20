@@ -82,7 +82,7 @@ class PrefFragment : Fragment() {
         q.add(stringRequest)
 
         binding.signOutButton.setOnClickListener {
-            val intent = Intent(activity, LoginFragment::class.java)
+            val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
             // ini untuk tutup aktivitas di main
             activity?.finish()
@@ -101,7 +101,7 @@ class PrefFragment : Fragment() {
                     if (newPass == confPass) {
 
                         // Panggil web service untuk mengubah password
-                        val idUser = shared.getInt("ID", 0) // Mengambil ID pengguna dari SharedPreferences
+                        val idUser = shared.getInt("id", 1) // Mengambil ID pengguna dari SharedPreferences
                         Log.d("changePass", "ID Pengguna: $idUser")
 
                         changePassword(idUser, oldPass, newPass)
@@ -139,7 +139,7 @@ class PrefFragment : Fragment() {
         }
     }
     private fun changePassword(idUser: Int, oldPassword: String, newPassword: String) {
-        val url = "https://ubaya.me/native/160421054/change_pass.php"
+        val url = "https://ubaya.me/native/160421056/change_pass.php"
         val requestQueue = Volley.newRequestQueue(requireContext())
 
         val stringRequest = object : StringRequest(

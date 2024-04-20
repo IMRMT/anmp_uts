@@ -41,21 +41,5 @@ class BeritaListFragment : Fragment() {
         viewModel.beritasLD.observe(viewLifecycleOwner, Observer {
             beritaListAdapter.updateBeritaList(it)
         })
-//        viewModel.beritaLoadErrorLD.observe(viewLifecycleOwner, Observer {
-//            if(it == true) {
-//                binding.txtError?.visibility = View.VISIBLE
-//            } else {
-//                binding.txtError?.visibility = View.GONE
-//            }
-//        })
-//        viewModel.loadingLD.observe(viewLifecycleOwner, Observer {
-//            if(it == true) {
-//                binding.recViewBerita.visibility = View.GONE
-//                binding.progressLoad.visibility = View.VISIBLE
-//            } else {
-//                binding.recViewBerita.visibility = View.VISIBLE
-//                binding.progressLoad.visibility = View.GONE
-//            }
-//        })
     }
 }
