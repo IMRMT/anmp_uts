@@ -36,8 +36,9 @@ class BeritaListAdapter(val beritaList:ArrayList<Berita>): RecyclerView.Adapter<
     override fun onBindViewHolder(holder: BeritaViewHolder, position: Int) {
         holder.binding.txtTitle.text = beritaList[position].title
         holder.binding.txtName.text = beritaList[position].author
-        holder.binding.txtPara.text = beritaList[position].para
+        holder.binding.txtDesc.text = beritaList[position].desc
         holder.binding.txtGenre.text = beritaList[position].genre
+        holder.binding.txtId.text = beritaList[position].id.toString()
 
         holder.binding.btnDetail.setOnClickListener {
             val id = holder.binding.txtId.text.toString()

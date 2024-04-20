@@ -14,7 +14,7 @@ import com.ubaya.anmp_uts.viewmodel.BeritaViewModel
 class BeritaListFragment : Fragment() {
     private lateinit var binding: FragmentBeritaListBinding
     private lateinit var viewModel: BeritaViewModel
-    private val fighterListAdapter  = BeritaListAdapter(arrayListOf())
+    private val beritaListAdapter  = BeritaListAdapter(arrayListOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,30 +32,30 @@ class BeritaListFragment : Fragment() {
         viewModel.refresh()
 
         binding.recViewBerita.layoutManager = LinearLayoutManager(context)
-        binding.recViewBerita.adapter = fighterListAdapter
+        binding.recViewBerita.adapter = beritaListAdapter
 
         observeViewModel()
     }
 
     fun observeViewModel() {
         viewModel.beritasLD.observe(viewLifecycleOwner, Observer {
-            fighterListAdapter.updateBeritaList(it)
+            beritaListAdapter.updateBeritaList(it)
         })
-        viewModel.beritaLoadErrorLD.observe(viewLifecycleOwner, Observer {
-            if(it == true) {
-                binding.txtError?.visibility = View.VISIBLE
-            } else {
-                binding.txtError?.visibility = View.GONE
-            }
-        })
-        viewModel.loadingLD.observe(viewLifecycleOwner, Observer {
-            if(it == true) {
-                binding.recViewBerita.visibility = View.GONE
-                binding.progressLoad.visibility = View.VISIBLE
-            } else {
-                binding.recViewBerita.visibility = View.VISIBLE
-                binding.progressLoad.visibility = View.GONE
-            }
-        })
+//        viewModel.beritaLoadErrorLD.observe(viewLifecycleOwner, Observer {
+//            if(it == true) {
+//                binding.txtError?.visibility = View.VISIBLE
+//            } else {
+//                binding.txtError?.visibility = View.GONE
+//            }
+//        })
+//        viewModel.loadingLD.observe(viewLifecycleOwner, Observer {
+//            if(it == true) {
+//                binding.recViewBerita.visibility = View.GONE
+//                binding.progressLoad.visibility = View.VISIBLE
+//            } else {
+//                binding.recViewBerita.visibility = View.VISIBLE
+//                binding.progressLoad.visibility = View.GONE
+//            }
+//        })
     }
 }

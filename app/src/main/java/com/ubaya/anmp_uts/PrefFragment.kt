@@ -50,7 +50,7 @@ class PrefFragment : Fragment() {
 
         // Mengambil ID pengguna dari SharedPreferences
         //Ambil userID yang login
-        var sharedFile = "com.ivano.uas_native"
+        var sharedFile = "com.ubaya.anmp_uts"
         var shared: SharedPreferences = requireContext().getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
         val idUser = shared.getInt("ID",0)
 
@@ -64,9 +64,6 @@ class PrefFragment : Fragment() {
                 val arrayData = obj.getJSONArray("data")
                 if (arrayData.length() > 0) {
                     val userData = arrayData.getJSONObject(0)
-                    val url_foto = userData.getString("img_url")
-
-                    Picasso.get().load(url_foto).into(binding.profileImageView)
 
                     binding.txtUsername.text=userData.getString("username")
                 }
@@ -85,7 +82,7 @@ class PrefFragment : Fragment() {
         q.add(stringRequest)
 
         binding.signOutButton.setOnClickListener {
-            val intent = Intent(activity, LoginActivity::class.java)
+            val intent = Intent(activity, LoginFragment::class.java)
             startActivity(intent)
             // ini untuk tutup aktivitas di main
             activity?.finish()

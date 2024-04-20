@@ -14,8 +14,8 @@ import com.ubaya.anmp_uts.model.Berita
 
 class BeritaViewModel(application: Application): AndroidViewModel(application) {
     val beritasLD = MutableLiveData<ArrayList<Berita>>()
-    val beritaLoadErrorLD = MutableLiveData<Boolean>()
-    val loadingLD = MutableLiveData<Boolean>()
+//    val beritaLoadErrorLD = MutableLiveData<Boolean>()
+//    val loadingLD = MutableLiveData<Boolean>()
     val TAG = "volleyTag"
     private var queue: RequestQueue? = null
 
