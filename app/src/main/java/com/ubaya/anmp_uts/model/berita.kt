@@ -5,7 +5,7 @@ data class Berita(
     val author:String?,
     val title:String?,
     val descript:String?,
-    val para:String?,
+    val para:List<String>?,
     val genre:String?,
     val date:String?,
     val images:String?

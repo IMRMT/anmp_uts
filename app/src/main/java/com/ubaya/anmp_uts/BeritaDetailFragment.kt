@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.squareup.picasso.Picasso
 import com.ubaya.anmp_uts.databinding.FragmentBeritaDetailBinding
 import com.ubaya.anmp_uts.viewmodel.DetailViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -33,22 +34,54 @@ class BeritaDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        viewModel.refresh()
+        if(arguments!=null){
+            viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+            viewModel.fetchDetail(BeritaDetailFragmentArgs.fromBundle(requireArguments()).beritaId)
 
-
-        observeViewModel()
+            observeViewModel()
+        }
     }
     fun observeViewModel() {
-        viewModel.beritaLD.observe(viewLifecycleOwner, Observer {
-            if(arguments != null) {
-                val id = BeritaDetailFragmentArgs.fromBundle(requireArguments()).beritaId
-                binding.txtId.setText(id)
+        viewModel.detailLD.observe(viewLifecycleOwner, Observer {
+            if(it == null){
+
+            }else{
+                binding.txtTitle.setText(it.title)
+                binding.txtGenre.setText(it.genre)
+                binding.txtName.setText("@${it.author}")
+                val picasso = Picasso.Builder(binding.root.context)
+                picasso.listener { picasso, uri, exception -> exception.printStackTrace() }
+                picasso.build().load(it.images).into(binding.imageView)
+
             }
-            binding.txtName.setText(it.author)
-            binding.txtTitle.setText(it.title)
-            binding.txtPara.setText(it.para)
-            binding.txtGenre.setText(it.genre)
+
+            //Multi Page
+            val berita = it.para
+            val size = berita?.size ?: 0
+            var index = 0
+
+            if(size > 0){
+                binding.txtPara.text = berita?.get(index)
+                binding.btnPrev.isEnabled = false
+
+                binding.btnNext.setOnClickListener {
+                    index++
+                    binding.txtPara.text = berita?.get(index)
+                    binding.btnPrev.isEnabled = true
+                    if(index == size - 1) {
+                        binding.btnNext.isEnabled = false
+                    }
+                }
+
+                binding.btnPrev.setOnClickListener {
+                    index--
+                    binding.txtPara.text = berita?.get(index)
+                    binding.btnNext.isEnabled = true
+                    if(index == 0){
+                        binding.btnPrev.isEnabled = false
+                    }
+                }
+            }
         })
     }
 }

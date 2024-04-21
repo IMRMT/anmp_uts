@@ -1,13 +1,41 @@
 package com.ubaya.anmp_uts.viewmodel
 
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 import com.ubaya.anmp_uts.model.Berita
 
-class DetailViewModel: ViewModel() {
-    val beritaLD = MutableLiveData<Berita>()
-    fun refresh(){
-        val student1 = Berita(1,"Loch Martin","Loch Martin","A detective must solve a murder mystery on a luxurious train.","Velociraptor is a genus of small dromaeosaurid dinosaurs that lived in Asia during the Late Cretaceous epoch, about 75 million to 71 million years ago. Two species are currently recognized, although others have been assigned in the past. The type species is V. mongoliensis, named and described in 1924.","dinosaur","12-02-2023","https://www.nhm.ac.uk/content/dam/nhmwww/discover/velociraptor-render-1200x675.jpg")
-        beritaLD.value = student1
+class DetailViewModel(application: Application):AndroidViewModel(application) {
+    val detailLD = MutableLiveData<Berita>()
+    val TAG = "volleyTag"
+    private var queue: RequestQueue? = null
+
+    fun fetchDetail(id:Int){
+        queue = Volley.newRequestQueue(getApplication())
+        val url = "http://10.0.2.2/anmp_uts/berita-detail.php?id=${id}"
+
+        val stringRequest = StringRequest(
+            Request.Method.GET, url, {
+                detailLD.value = Gson().fromJson(it, Berita::class.java)
+                Log.d("showVolley", it)
+            },
+            {
+                Log.d("ShowVolley", it.toString())
+            }
+        )
+        stringRequest.tag = TAG
+        queue?.add(stringRequest)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        queue?.cancelAll(TAG)
     }
 }
