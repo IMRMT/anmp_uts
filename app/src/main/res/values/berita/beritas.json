@@ -1,0 +1,135 @@
+[
+  {
+    "id": 1,
+    "author": "Loch Martin",
+    "title": "The Raptor",
+    "descript": "Small carnivorous dinosaurs from the Late Cretaceous period.",
+    "para": [
+      "Velociraptor is a genus of small dromaeosaurid dinosaurs that lived in Asia during the Late Cretaceous epoch, about 75 million to 71 million years ago.",
+      "Two species are currently recognized, although others have been assigned in the past.",
+      "The type species is V. mongoliensis, named and described in 1924."
+    ],
+    "genre": "dinosaur",
+    "date": "12-02-2023",
+    "images": "https://loremflickr.com/320/240/sciencefiction?lock=2"
+  },
+  {
+    "id": 2,
+    "author": "Isaac Asimov",
+    "title": "Foundation",
+    "descript": "A visionary mathematician predicts the fall of an empire and establishes a Foundation to preserve knowledge.",
+    "para": [
+      "In the not-too-distant future, humanity has spread across the galaxy, creating a vast interstellar empire.",
+      "Hari Seldon, a brilliant mathematician, predicts the fall of this empire and establishes the Foundation to preserve knowledge and shorten the dark ages that will follow."
+    ],
+    "genre": "science fiction",
+    "date": "10-15-2021",
+    "images": "https://loremflickr.com/320/240/sciencefiction?lock=2"
+  },
+  {
+    "id": 3,
+    "author": "Agatha Christie",
+    "title": "Murder on the Orient Express",
+    "descript": "A detective must solve a murder mystery on a luxurious train.",
+    "para": [
+      "Hercule Poirot finds himself aboard the luxurious Orient Express train, where a murder has taken place.",
+      "With a train full of suspects and an alibi for each one, Poirot must use his keen detective skills to solve the mystery."
+    ],
+    "genre": "mystery",
+    "date": "05-10-2019",
+    "images": "https://loremflickr.com/320/240/mystery?lock=3"
+  },
+  {
+    "id": 4,
+    "author": "J.R.R. Tolkien",
+    "title": "The Lord of the Rings",
+    "descript": "A hobbit embarks on a perilous journey to destroy the One Ring and save Middle-earth.",
+    "para": [
+      "Frodo Baggins, a hobbit from the Shire, embarks on a perilous journey to destroy the One Ring and save Middle-earth from the dark lord Sauron.",
+      "Along the way, he is joined by a fellowship of diverse characters, each with their own strengths and weaknesses."
+    ],
+    "genre": "fantasy",
+    "date": "07-23-2020",
+    "images": "https://loremflickr.com/320/240/fantasy?lock=4"
+  },
+  {
+    "id": 5,
+    "author": "Margaret Atwood",
+    "title": "The Handmaid's Tale",
+    "descript": "A woman navigates an oppressive dystopian society while planning her escape.",
+    "para": [
+      "Set in a dystopian future where a totalitarian regime has overthrown the United States government, women are subjugated and treated as property.",
+      "Offred, a handmaid, navigates this oppressive society while secretly planning her escape."
+    ],
+    "genre": "historical fiction",
+    "date": "03-08-2018",
+    "images": "https://loremflickr.com/320/240/historicalfiction?lock=5"
+  },
+  {
+    "id": 6,
+    "author": "Nicholas Sparks",
+    "title": "The Notebook",
+    "descript": "A couple's romance faces challenges amid societal expectations and war.",
+    "para": [
+      "In 1940s South Carolina, a young couple, Noah Calhoun and Allie Hamilton, fall deeply in love.",
+      "However, their romance is cut short by societal expectations and the outbreak of World War II.",
+      "Years later, they reunite and rediscover the passion they once shared."
+    ],
+    "genre": "romance",
+    "date": "11-12-2017",
+    "images": "https://loremflickr.com/320/240/romance?lock=6"
+  },
+  {
+    "id": 7,
+    "author": "Stephen King",
+    "title": "The Shining",
+    "descript": "A man's sanity unravels in a haunted hotel during a winter caretaking job.",
+    "para": [
+      "Jack Torrance, an aspiring writer and recovering alcoholic, takes a job as the winter caretaker of the Overlook Hotel.",
+      "As the hotel becomes snowbound, Jack's sanity begins to unravel, and the malevolent forces within the hotel threaten his family."
+    ],
+    "genre": "horror",
+    "date": "09-20-2016",
+    "images": "https://loremflickr.com/320/240/horror?lock=7"
+  },
+  {
+    "id": 8,
+    "author": "Gillian Flynn",
+    "title": "Gone Girl",
+    "descript": "A man becomes the prime suspect in his wife's disappearance, unraveling secrets.",
+    "para": [
+      "On the morning of their fifth wedding anniversary, Nick Dunne's wife, Amy, disappears without a trace.",
+      "As the police and media swarm in, Nick becomes the prime suspect in her disappearance.",
+      "But as secrets unravel, the truth becomes more elusive."
+    ],
+    "genre": "thriller",
+    "date": "02-05-2015",
+    "images": "https://loremflickr.com/320/240/thriller?lock=8"
+  },
+  {
+    "id": 9,
+    "author": "Walter Isaacson",
+    "title": "Steve Jobs",
+    "descript": "A biography detailing the life and innovations of Apple co-founder Steve Jobs.",
+    "para": [
+      "This biography of Steve Jobs, the co-founder of Apple Inc., provides a deep dive into his life, from his upbringing in California to his rise as one of the most influential figures in technology.",
+      "It explores his visionary leadership and the impact of his innovations."
+    ],
+    "genre": "biography",
+    "date": "06-30-2014",
+    "images": "https://loremflickr.com/320/240/biography?lock=9"
+  },
+  {
+    "id": 10,
+    "author": "Tina Fey",
+    "title": "Bossypants",
+    "descript": "A humorous and insightful memoir of comedian Tina Fey's life and career.",
+    "para": [
+      "Tina Fey's memoir offers a humorous and insightful look into her life and career.",
+      "From her childhood in Pennsylvania to her days as head writer for Saturday Night Live and beyond, Fey shares personal anecdotes and behind-the-scenes stories with her signature wit."
+    ],
+    "genre": "comedy",
+    "date": "04-18-2013",
+    "images": "https://loremflickr.com/320/240/comedy?lock=10"
+  }
+]
