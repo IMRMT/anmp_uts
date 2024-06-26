@@ -7,19 +7,19 @@ import androidx.room.PrimaryKey
 @Entity
 data class Berita(
     @ColumnInfo(name="author")
-    val author:String?,
+    var author:String?,
     @ColumnInfo(name="title")
-    val title:String?,
+    var title:String?,
     @ColumnInfo(name="descript")
-    val descript:String?,
+    var descript:String?,
     @ColumnInfo(name="paragraf")
-    val para:List<String>?,
+    var para:List<String>?,
     @ColumnInfo(name="genre")
-    val genre:String?,
+    var genre:String?,
     @ColumnInfo(name="date")
-    val date:String?,
+    var date:String?,
     @ColumnInfo(name="images")
-    val images:String?
+    var images:String?
 ){
     @PrimaryKey(autoGenerate = true)
     var uuid:Int=0

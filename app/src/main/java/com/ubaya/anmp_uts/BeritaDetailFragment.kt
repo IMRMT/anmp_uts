@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class BeritaDetailFragment : Fragment() {
+class BeritaDetailFragment : Fragment(), NextClickListener, PrevClickListener {
     private lateinit var binding: FragmentBeritaDetailBinding
     private lateinit var viewModel: DetailViewModel
 
@@ -83,5 +83,13 @@ class BeritaDetailFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onNextClick(v: View) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPrevClick(v: View) {
+        TODO("Not yet implemented")
     }
 }

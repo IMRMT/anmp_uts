@@ -12,7 +12,7 @@ import com.ubaya.anmp_uts.databinding.BeritaListItemBinding
 import com.ubaya.anmp_uts.model.Berita
 import java.lang.Exception
 
-class BeritaListAdapter(val beritaList:ArrayList<Berita>): RecyclerView.Adapter<BeritaListAdapter.BeritaViewHolder>() {
+class BeritaListAdapter(val beritaList:ArrayList<Berita>): RecyclerView.Adapter<BeritaListAdapter.BeritaViewHolder>(), BeritaClickListener {
 
     class BeritaViewHolder(var binding: BeritaListItemBinding)
         :RecyclerView.ViewHolder(binding.root)
@@ -34,18 +34,22 @@ class BeritaListAdapter(val beritaList:ArrayList<Berita>): RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: BeritaViewHolder, position: Int) {
-        holder.binding.txtTitle.text = beritaList[position].title
-        holder.binding.txtName.text = beritaList[position].author
-        holder.binding.txtDesc.text = beritaList[position].descript
-        holder.binding.txtGenre.text = beritaList[position].genre
-        holder.binding.txtId.text = beritaList[position].id.toString()
+//        holder.binding.txtTitle.text = beritaList[position].title
+//        holder.binding.txtName.text = beritaList[position].author
+//        holder.binding.txtDesc.text = beritaList[position].descript
+//        holder.binding.txtGenre.text = beritaList[position].genre
+//        holder.binding.txtId.text = beritaList[position].uuid.toString()
+//
+//        holder.binding.btnDetail.setOnClickListener {
+//            val id = holder.binding.txtId.text.toString()
+//            val beritaId = Integer.parseInt(id)
+//            val action = BeritaListFragmentDirections.actionBeritaDetail(beritaId)
+//            Navigation.findNavController(it).navigate(action)
+//        }
 
-        holder.binding.btnDetail.setOnClickListener {
-            val id = holder.binding.txtId.text.toString()
-            val beritaId = Integer.parseInt(id)
-            val action = BeritaListFragmentDirections.actionBeritaDetail(beritaId)
-            Navigation.findNavController(it).navigate(action)
-        }
+        holder.binding.berita = beritaList[position]
+        //databinding bisa dipake kalo ui rame/banyakk
+        holder.binding.readListener = this//ini karena yang ditekan adalah dirinya sendiri
 
         val picasso = Picasso.Builder(holder.itemView.context)
         picasso.listener { picasso, uri, exception ->
@@ -62,5 +66,11 @@ class BeritaListAdapter(val beritaList:ArrayList<Berita>): RecyclerView.Adapter<
                     Log.d("Picasso_error", e.toString())
                 }
             })
+    }
+
+    override fun onBeritaClick(v: View) {
+        val uuid = v.tag.toString().toInt()
+        val action  = BeritaListFragmentDirections.actionBeritaDetail(uuid)
+        Navigation.findNavController(v).navigate(action)
     }
 }

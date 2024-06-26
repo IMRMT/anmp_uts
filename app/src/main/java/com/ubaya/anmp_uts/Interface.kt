@@ -1,0 +1,13 @@
+package com.ubaya.anmp_uts
+
+import android.view.View
+
+interface BeritaClickListener {
+    fun onBeritaClick(v: View)
+}
+interface NextClickListener {
+    fun onNextClick(v: View)
+}
+interface PrevClickListener {
+    fun onPrevClick(v: View)
+}
