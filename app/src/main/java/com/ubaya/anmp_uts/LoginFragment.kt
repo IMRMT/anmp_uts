@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ubaya.anmp_uts.databinding.FragmentLoginBinding
-import com.ubaya.anmp_uts.model.User
 import com.ubaya.anmp_uts.viewmodel.UserViewModel
 
 class LoginFragment : Fragment() {

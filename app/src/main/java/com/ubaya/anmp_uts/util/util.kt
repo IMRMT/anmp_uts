@@ -5,6 +5,24 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+
+val DB_NAME= "newdb"
+
+val MIGRATION_1_2_Berita = object : Migration(1,2){
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE todo ADD COLUMN priority INTEGER DEFAULT 3 not null")
+    }
+
+}
+
+val MIGRATION_1_2_User = object : Migration(1,2){
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE todo ADD COLUMN todo_date INTEGER DEFAULT 0 not null")
+    }
+
+}
 
 fun createNotificationChannel(context: Context, importance:Int,
                               showBadge: Boolean, name:String, description:String){

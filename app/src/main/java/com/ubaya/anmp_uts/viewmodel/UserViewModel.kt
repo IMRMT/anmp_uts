@@ -18,7 +18,6 @@ import com.ubaya.anmp_uts.Account
 import com.ubaya.anmp_uts.Global
 import com.ubaya.anmp_uts.LoginActivity
 import com.ubaya.anmp_uts.model.Berita
-import com.ubaya.anmp_uts.model.User
 import org.json.JSONObject
 
 class UserViewModel(application: Application): AndroidViewModel(application) {
