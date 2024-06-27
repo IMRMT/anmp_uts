@@ -12,16 +12,20 @@ val DB_NAME= "newdb"
 
 val MIGRATION_1_2_Berita = object : Migration(1,2){
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE todo ADD COLUMN priority INTEGER DEFAULT 3 not null")
+        database.execSQL("")
     }
-
 }
 
 val MIGRATION_1_2_User = object : Migration(1,2){
     override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE todo ADD COLUMN todo_date INTEGER DEFAULT 0 not null")
+        database.execSQL("")
     }
+}
 
+val MIGRATION_1_2_Paragraf = object : Migration(1,2){
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("")
+    }
 }
 
 fun createNotificationChannel(context: Context, importance:Int,
