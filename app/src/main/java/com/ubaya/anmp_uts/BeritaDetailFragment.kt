@@ -34,76 +34,81 @@ class BeritaDetailFragment : Fragment(), NextClickListener, PrevClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(arguments!=null){
-            viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-            viewModel.fetchDetail(BeritaDetailFragmentArgs.fromBundle(requireArguments()).beritaId)
+//        if(arguments!=null){
+//            viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+//            viewModel.fetchDetail(BeritaDetailFragmentArgs.fromBundle(requireArguments()).beritaId)
+//
+//            observeViewModel()
+//        }
+        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+        val uuid = BeritaDetailFragmentArgs.fromBundle(requireArguments()).beritaId
 
-            observeViewModel()
-        }
+        viewModel.fetchDetail(uuid)
+
+        binding.nextListener = this
+        binding.prevListener = this
+
+        observeViewModel()
     }
     fun observeViewModel() {
-        viewModel.detailLD.observe(viewLifecycleOwner, Observer {
-            if(it == null){
-
-            }else{
-                binding.txtTitle.setText(it.title)
-                binding.txtGenre.setText(it.genre)
-                binding.txtName.setText("@${it.author}")
-                val picasso = Picasso.Builder(binding.root.context)
-                picasso.listener { picasso, uri, exception -> exception.printStackTrace() }
-                picasso.build().load(it.images).into(binding.imageView)
-
-            }
-
-            //Multi Page
-            val berita = it.para
-            val size = berita?.size ?: 0
-            var index = 0
-
-            if(size > 0){
-                binding.txtPara.text = berita?.get(index)
-                binding.btnPrev.isEnabled = false
-
-                binding.btnNext.setOnClickListener {
-                    index++
-                    binding.txtPara.text = berita?.get(index)
-                    binding.btnPrev.isEnabled = true
-                    if(index == size - 1) {
-                        binding.btnNext.isEnabled = false
-                    }
-                }
-
-                binding.btnPrev.setOnClickListener {
-                    index--
-                    binding.txtPara.text = berita?.get(index)
-                    binding.btnNext.isEnabled = true
-                    if(index == 0){
-                        binding.btnPrev.isEnabled = false
-                    }
-                }
-            }
+//        viewModel.detailLD.observe(viewLifecycleOwner, Observer {
+//            if(it == null){
+//
+//            }else{
+//                binding.txtTitle.setText(it.title)
+//                binding.txtGenre.setText(it.genre)
+//                binding.txtName.setText("@${it.author}")
+//                val picasso = Picasso.Builder(binding.root.context)
+//                picasso.listener { picasso, uri, exception -> exception.printStackTrace() }
+//                picasso.build().load(it.images).into(binding.imageView)
+//
+//            }
+//
+//            //Multi Page
+//            val berita = it.para
+//            val size = berita?.size ?: 0
+//            var index = 0
+//
+//            if(size > 0){
+//                binding.txtPara.text = berita?.get(index)
+//                binding.btnPrev.isEnabled = false
+//
+//                binding.btnNext.setOnClickListener {
+//                    index++
+//                    binding.txtPara.text = berita?.get(index)
+//                    binding.btnPrev.isEnabled = true
+//                    if(index == size - 1) {
+//                        binding.btnNext.isEnabled = false
+//                    }
+//                }
+//
+//                binding.btnPrev.setOnClickListener {
+//                    index--
+//                    binding.txtPara.text = berita?.get(index)
+//                    binding.btnNext.isEnabled = true
+//                    if(index == 0){
+//                        binding.btnPrev.isEnabled = false
+//                    }
+//                }
+//            }
+//        })
+        viewModel.detailLD.observe(viewLifecycleOwner,{
+            binding.berita = it//detail berita bawaan dari variable
+        })
+        viewModel.paraLD.observe(viewLifecycleOwner,{
+            binding.para = it//paragraf berita bawaan dari variable
         })
     }
 
     override fun onNextClick(v: View) {
-        val para = v.tag.toString().toInt()
-        holder.binding.para = beritaList[position]
-        var index = 0
-        if(size > 0){
-            binding.txtPara.text = para[]
-            binding.btnPrev.isEnabled = false
-
-            index++
-            binding.txtPara.text = para?.get(index)
-            binding.btnPrev.isEnabled = true
-            if(index == size - 1) {
-                binding.btnNext.isEnabled = false
-            }
+        if (v.tag.toString().toInt() > 0){
+            binding.para!!.uuid = v.tag.toString().toInt() + 1
         }
-        //masih nunggu database paragraf
     }
 
     override fun onPrevClick(v: View) {
-        TODO("Not yet implemented")
+        if (v.tag.toString().toInt() > 0){
+            binding.para!!.uuid = v.tag.toString().toInt() - 1
+        }
     }
 }

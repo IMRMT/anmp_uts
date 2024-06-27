@@ -7,8 +7,14 @@ import android.content.Context
 import android.os.Build
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.ubaya.anmp_uts.model.HobbyAppDatabase
 
 val DB_NAME= "newdb"
+
+fun buildDb(context:Context):HobbyAppDatabase{
+    val db =HobbyAppDatabase.buildDatabase(context)
+    return db
+}
 
 val MIGRATION_1_2_Berita = object : Migration(1,2){
     override fun migrate(database: SupportSQLiteDatabase) {

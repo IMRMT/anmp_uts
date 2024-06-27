@@ -13,8 +13,6 @@ data class Berita(
     var title:String?,
     @ColumnInfo(name="descript")
     var descript:String?,
-    @ColumnInfo(name="paragraf")
-    var para:List<String>?,
     @ColumnInfo(name="genre")
     var genre:String?,
     @ColumnInfo(name="date")

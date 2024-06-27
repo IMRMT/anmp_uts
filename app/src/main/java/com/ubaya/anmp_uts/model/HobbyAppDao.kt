@@ -24,8 +24,8 @@ interface HobbyAppDao {
     fun deleteTodoBerita(berita: Berita)
 
     @Query("UPDATE berita SET author=:author,title =:title,descript=:descript," +
-            "paragraf=:paragraf,genre=:genre,date=:date,images=:images  WHERE uuid=:id")
-    fun updateBerita(author:String,title:String,descript:String,paragraf:String,
+            "genre=:genre,date=:date,images=:images  WHERE uuid=:id")
+    fun updateBerita(author:String,title:String,descript:String,
                      genre:String,date:String,images:String ,id:Int) //id wajib
 
     @Update
@@ -49,7 +49,7 @@ interface HobbyAppDao {
     fun deleteTodoUser(user: User)
 
     @Query("UPDATE user SET username=:username,password =:password  WHERE uuid=:id")
-    fun updateUser(username: User, password:String, id:Int) //id wajib
+    fun updateUser(username: String, password:String, id:Int) //id wajib, user kuganti string soalnya error
 
     @Update
     fun UpdateTodoUser(user: User)

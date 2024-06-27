@@ -27,7 +27,7 @@ class BeritaListAdapter(val beritaList:ArrayList<Berita>): RecyclerView.Adapter<
         return beritaList.size
     }
 
-    fun updateBeritaList(newStudentList: ArrayList<Berita>) {
+    fun updateBeritaList(newStudentList: List<Berita>) {
         beritaList.clear()
         beritaList.addAll(newStudentList)
         notifyDataSetChanged()
