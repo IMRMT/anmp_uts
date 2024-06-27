@@ -9,72 +9,19 @@ import com.ubaya.anmp_uts.util.MIGRATION_1_2_Berita
 import com.ubaya.anmp_uts.util.MIGRATION_1_2_Paragraf
 import com.ubaya.anmp_uts.util.MIGRATION_1_2_User
 
-@Database(entities = arrayOf(Berita::class), version =  1)
-abstract class BeritaDatabase:RoomDatabase() {
-    abstract fun beritaDAO() : HobbyAppDao
+@Database(entities = arrayOf(Paragraf::class,User::class,Berita::class), version =  1)
+abstract class HobbyAppDatabase:RoomDatabase() {
+    abstract fun hobbyAppDao() : HobbyAppDao
 
     companion object {
-        @Volatile private var instance: BeritaDatabase ?= null
+        @Volatile private var instance: HobbyAppDatabase ?= null
         private val LOCK = Any()
 
         fun buildDatabase(context:Context) =
             Room.databaseBuilder(
                 context.applicationContext,
-                BeritaDatabase::class.java,
-                DB_NAME).addMigrations(MIGRATION_1_2_Berita).build()
-    }
-
-    operator fun invoke(context: Context){
-        if(instance != null){
-            synchronized(LOCK){
-                instance ?: buildDatabase(context).also {
-                    instance = it
-                }
-            }
-        }
-    }
-}
-
-@Database(entities = arrayOf(User::class), version =  1)
-abstract class UserDatabase:RoomDatabase() {
-    abstract fun userDAO() : HobbyAppDao
-
-    companion object {
-        @Volatile private var instance: UserDatabase ?= null
-        private val LOCK = Any()
-
-        fun buildDatabase(context:Context) =
-            Room.databaseBuilder(
-                context.applicationContext,
-                UserDatabase::class.java,
-                DB_NAME).addMigrations(MIGRATION_1_2_User).build()
-    }
-
-    operator fun invoke(context: Context){
-        if(instance != null){
-            synchronized(LOCK){
-                instance ?: buildDatabase(context).also {
-                    instance = it
-                }
-            }
-        }
-    }
-
-}
-
-@Database(entities = arrayOf(User::class), version =  1)
-abstract class ParagrafDatabase:RoomDatabase() {
-    abstract fun userDAO() : HobbyAppDao
-
-    companion object {
-        @Volatile private var instance: ParagrafDatabase ?= null
-        private val LOCK = Any()
-
-        fun buildDatabase(context:Context) =
-            Room.databaseBuilder(
-                context.applicationContext,
-                ParagrafDatabase::class.java,
-                DB_NAME).addMigrations(MIGRATION_1_2_Paragraf).build()
+                HobbyAppDatabase::class.java,
+                DB_NAME).addMigrations(MIGRATION_1_2_Paragraf,MIGRATION_1_2_Berita,MIGRATION_1_2_User).build()
     }
 
     operator fun invoke(context: Context){
