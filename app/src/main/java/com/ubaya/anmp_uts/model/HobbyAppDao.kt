@@ -36,14 +36,20 @@ interface HobbyAppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllUser(vararg user: User)
 
+    @Insert
+    fun newUser(user: User)
+
+    @Query("SELECT * FROM user ORDER BY uuid")
+    fun selectAllUser(): List<User>
+
     @Query("SELECT * FROM user WHERE uuid= :id")
-    fun selectUserTodo(id:Int): User
+    fun selectUser(id:Int): User
 
     @Delete
     fun deleteTodoUser(user: User)
 
     @Query("UPDATE user SET username=:username,password =:password  WHERE uuid=:id")
-    fun updateUser(username:String,password:String,id:Int) //id wajib
+    fun updateUser(username: User, password:String, id:Int) //id wajib
 
     @Update
     fun UpdateTodoUser(user: User)
