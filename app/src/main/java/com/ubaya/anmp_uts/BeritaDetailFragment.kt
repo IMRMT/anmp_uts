@@ -86,7 +86,21 @@ class BeritaDetailFragment : Fragment(), NextClickListener, PrevClickListener {
     }
 
     override fun onNextClick(v: View) {
-        TODO("Not yet implemented")
+        val para = v.tag.toString().toInt()
+        holder.binding.para = beritaList[position]
+        var index = 0
+        if(size > 0){
+            binding.txtPara.text = para[]
+            binding.btnPrev.isEnabled = false
+
+            index++
+            binding.txtPara.text = para?.get(index)
+            binding.btnPrev.isEnabled = true
+            if(index == size - 1) {
+                binding.btnNext.isEnabled = false
+            }
+        }
+        //masih nunggu database paragraf
     }
 
     override fun onPrevClick(v: View) {

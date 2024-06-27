@@ -92,17 +92,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="28dp"
                     android:text="NEXT"
+                    android:tag="@{berita.uuid}"
                     android:onClick="@{nextListener::onNextClick}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtGenre" />
-
+<!--berita.uuid habis ini diganti para uuid(id paragraf)-->
                 <Button
                     android:id="@+id/btnPrev"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:text="PREVIOUS"
+                    android:tag="@{berita.uuid}"
                     android:onClick="@{prevListener::onPrevClick}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btnNext"
