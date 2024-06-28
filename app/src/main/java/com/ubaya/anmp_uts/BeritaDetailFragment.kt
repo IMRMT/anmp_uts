@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
 import com.ubaya.anmp_uts.databinding.FragmentBeritaDetailBinding
+import com.ubaya.anmp_uts.model.Berita
 import com.ubaya.anmp_uts.viewmodel.DetailViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -34,21 +36,22 @@ class BeritaDetailFragment : Fragment(), NextClickListener, PrevClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        if(arguments!=null){
+        binding.berita = Berita("","","","","","https://picsum.photos/200/300")
+        if(arguments!=null){
 //            viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 //            viewModel.fetchDetail(BeritaDetailFragmentArgs.fromBundle(requireArguments()).beritaId)
 //
 //            observeViewModel()
-//        }
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        val uuid = BeritaDetailFragmentArgs.fromBundle(requireArguments()).beritaId
+            viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+            val uuid = BeritaDetailFragmentArgs.fromBundle(requireArguments()).beritaId
+            viewModel.fetchDetail(uuid.toString())
 
-        viewModel.fetchDetail(uuid)
+            binding.nextListener = this
+            binding.prevListener = this
 
-        binding.nextListener = this
-        binding.prevListener = this
+            observeViewModel()
+        }
 
-        observeViewModel()
     }
     fun observeViewModel() {
 //        viewModel.detailLD.observe(viewLifecycleOwner, Observer {
@@ -91,7 +94,7 @@ class BeritaDetailFragment : Fragment(), NextClickListener, PrevClickListener {
 //                    }
 //                }
 //            }
-//        })
+// `       })
         viewModel.detailLD.observe(viewLifecycleOwner,{
             binding.berita = it//detail berita bawaan dari variable
         })
@@ -101,8 +104,12 @@ class BeritaDetailFragment : Fragment(), NextClickListener, PrevClickListener {
     }
 
     override fun onNextClick(v: View) {
-        if (v.tag.toString().toInt() > 0){
-            binding.para!!.uuid = v.tag.toString().toInt() + 1
+//        if (v.tag.toString().toInt() > 0){
+//            binding.para!!.uuid = v.tag.toString().toInt() + 1
+//        }
+        binding.para?.let {
+            it.uuid += 1
+            viewModel.fetchDetail(it.uuid.toString())
         }
     }
 
