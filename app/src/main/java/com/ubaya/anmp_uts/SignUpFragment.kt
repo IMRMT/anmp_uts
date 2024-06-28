@@ -37,7 +37,7 @@ class SignUpFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         binding.btnSignUp.setOnClickListener {
-            viewModel.register(username, password)
+//            viewModel.register(username, password)
             val action = SignUpFragmentDirections.actionSignUpLogIn()
             Navigation.findNavController(it).navigate(action)
         }

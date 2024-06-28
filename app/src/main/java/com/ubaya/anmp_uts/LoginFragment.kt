@@ -38,7 +38,7 @@ class LoginFragment : Fragment() {
         var shared: SharedPreferences = requireContext().getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
         val idUser = shared.getInt("ID",1)
         super.onViewCreated(view, savedInstanceState)
-        val userList:ArrayList<User>
+//        val userList:ArrayList<User>
 
         var username = binding.txtUserLogIn.text.toString()
         var password = binding.txtPassLogIn.text.toString()
@@ -51,7 +51,7 @@ class LoginFragment : Fragment() {
 
 
         binding.btnLogIn.setOnClickListener {
-            viewModel.login(username, password)
+//            viewModel.login(username, password)
             Log.d("btnclick", account.toString())
             if (username2.isEmpty() || password2.isEmpty()) {
                 Toast.makeText(requireContext(), "$username2 Data cannot be empty", Toast.LENGTH_SHORT).show()
