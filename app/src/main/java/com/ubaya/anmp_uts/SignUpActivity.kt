@@ -46,8 +46,8 @@ class SignUpActivity : AppCompatActivity() {
         var repassword = binding.txtRePassword.text.toString()
         var uName = false
 
-        val q = Volley.newRequestQueue(this)
-        val url = "https://ubaya.me/native/160421056/register.php"
+//        val q = Volley.newRequestQueue(this)
+//        val url = "https://ubaya.me/native/160421056/register.php"
 
         for (account in accounts) {
             if (account.username == username) {
