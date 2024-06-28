@@ -18,10 +18,9 @@ abstract class HobbyAppDatabase:RoomDatabase() {
         private val LOCK = Any()
 
         fun buildDatabase(context:Context) =
-            Room.databaseBuilder(
-                context.applicationContext,
-                HobbyAppDatabase::class.java,
-                DB_NAME).addMigrations(MIGRATION_1_2_Paragraf,MIGRATION_1_2_Berita,MIGRATION_1_2_User).build()
+            Room.databaseBuilder(context.applicationContext, HobbyAppDatabase::class.java, DB_NAME)
+                .addMigrations(MIGRATION_1_2_Paragraf,MIGRATION_1_2_Berita,MIGRATION_1_2_User)
+                .build()
     }
 
     operator fun invoke(context: Context){

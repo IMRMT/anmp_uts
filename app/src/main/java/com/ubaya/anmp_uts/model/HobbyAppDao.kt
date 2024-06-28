@@ -46,10 +46,10 @@ interface HobbyAppDao {
     fun selectUser(id:Int): User
 
     @Delete
-    fun deleteTodoUser(user: User)
+    fun deleteUser(user: User)
 
-    @Query("UPDATE user SET username=:username,password =:password  WHERE uuid=:id")
-    fun updateUser(username: String, password:String, id:Int) //id wajib, user kuganti string soalnya error
+    @Update()
+    fun updateUser(user: User)
 
     @Update
     fun UpdateTodoUser(user: User)
