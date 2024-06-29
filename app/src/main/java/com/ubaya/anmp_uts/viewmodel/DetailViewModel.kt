@@ -23,9 +23,9 @@ import kotlin.coroutines.CoroutineContext
 class DetailViewModel(application: Application):AndroidViewModel(application), CoroutineScope {
     private var job = Job()
     val detailLD = MutableLiveData<Berita>()
-    val paraLD = MutableLiveData<Paragraf>()
+    val paraLD = MutableLiveData<List<Paragraf>>()
 
-    fun fetchDetail(uuid:String){
+    fun fetchDetail(uuid:Int){
 //        queue = Volley.newRequestQueue(getApplication())
 //        val url = "http://10.0.2.2/anmp_uts/berita-detail.php?id=${id}"
 //
@@ -40,28 +40,16 @@ class DetailViewModel(application: Application):AndroidViewModel(application), C
 //        )
 //        stringRequest.tag = TAG
 //        queue?.add(stringRequest)
-        val TAG = "volleyTag" //ini bebas mau dikasi nama apa variablenya
-        var queue: RequestQueue?=null //object volley
-        queue = Volley.newRequestQueue(getApplication())//requestQueue butuh context, karena viewmodel gada context maka parent class diganti AndroidViewModel
-        val url = "http://adv.jitusolution.com/student.php?id=" + uuid
-        val stringRequest = StringRequest(
-            Request.Method.GET,
-            url,
-            {
-                Log.d("show_volley_detail",it)
-                //stype object untuk GSON
-                //mengirim data tunggal berupa class student
-                val berita1 = Gson().fromJson(it,Berita::class.java)
-                detailLD.value = berita1
-            },
-            {
-                Log.e("show_volley",it.toString())
-            }
-        )
-        stringRequest.tag = TAG
-        queue?.add(stringRequest)
         launch {
-            val db = buildDb(getApplication()).hobbyAppDao().selectBeritaTodo(uuid.toInt())
+            val db = buildDb(getApplication())
+            detailLD.postValue(db.hobbyAppDao().selectBeritaTodo(uuid))
+        }
+    }
+
+    fun getpara(beritaId: Int){
+        launch {
+            val db = buildDb(getApplication())
+            paraLD.postValue(db.hobbyAppDao().selectParagrafTodo(beritaId))
         }
     }
 

@@ -14,8 +14,17 @@ import com.squareup.picasso.Picasso
 fun loadPhoto(imageView: ImageView, url:String){
     val picasso = Picasso.Builder(imageView.context)
     picasso.listener{picasso, url, exception -> exception.printStackTrace()}
-    picasso.build().load(url).into(imageView)
-    imageView.visibility = View.VISIBLE
+//    picasso.build().load(url).into(imageView)
+//    imageView.visibility = View.VISIBLE
+    if (!url.isNullOrEmpty()) {
+        Picasso.get()
+            .load(url)
+            .into(imageView)
+        imageView.visibility = View.VISIBLE
+    } else {
+        imageView.setImageResource(R.drawable.baseline_person_2_24) // Placeholder image if URL is null or empty
+    }
+
 //        object:Callback{
 //        override fun onSuccess(){
 //            var v = imageView.parent as View

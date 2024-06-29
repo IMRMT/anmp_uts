@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:text="PREVIOUS"
-                    android:tag="@{berita.uuid}"
+                    android:tag="@{para.uuid}"
                     android:onClick="@{prevListener::onPrevClick}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/btnNext"

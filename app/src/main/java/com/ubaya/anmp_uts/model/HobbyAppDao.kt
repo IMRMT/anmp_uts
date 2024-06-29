@@ -59,8 +59,8 @@ interface HobbyAppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllParagraf(vararg paragraf: Paragraf)
 
-    @Query("SELECT * FROM paragraf WHERE uuid= :id")
-    fun selectParagrafTodo(id:Int): Paragraf
+    @Query("SELECT * FROM paragraf WHERE idBerita= :id")
+    fun selectParagrafTodo(id:Int): List<Paragraf>
 
     @Delete
     fun deleteTodoParagraf(paragraf: Paragraf)
