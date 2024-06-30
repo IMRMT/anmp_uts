@@ -10,11 +10,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat.recreate
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -22,6 +25,7 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
+import com.ubaya.anmp_uts.viewmodel.UserViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -29,12 +33,10 @@ import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 
 
-class PrefFragment : Fragment() {
+class PrefFragment : Fragment(), ButtonLogoutListener {
 
     private lateinit var binding: FragmentPrefBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var viewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,76 +47,15 @@ class PrefFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val q = Volley.newRequestQueue(activity)
-        val url = "https://ubaya.me/native/160421056/get_user.php"
 
-        // Mengambil ID pengguna dari SharedPreferences
-        //Ambil userID yang login
-        var sharedFile = "com.ubaya.anmp_uts"
-        var shared: SharedPreferences = requireContext().getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
-        val idUser = shared.getInt("ID",0)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        val idUser = sharedPreferences.getInt("id_user", 0)
+        viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        viewModel.fetch(idUser)
 
-        Log.d("FragmentPrefs", "ID Pengguna: $idUser")
+        binding.logoutListener = this
 
-        val stringRequest = object : StringRequest(
-            Request.Method.POST, url,
-            {
-                Log.d("apiresult", it)
-                val obj = JSONObject(it)
-                val arrayData = obj.getJSONArray("data")
-                if (arrayData.length() > 0) {
-                    val userData = arrayData.getJSONObject(0)
-
-                    binding.txtUsername.text=userData.getString("username")
-                }
-            },
-            {
-                Log.e("apiresult", it.message.toString())
-            }
-        ) {
-            // Override metode getParams() untuk menambahkan parameter ID pengguna
-            override fun getParams(): MutableMap<String, String> {
-                val params = HashMap<String, String>()
-                params["idUsers"] = idUser.toString()
-                return params
-            }
-        }
-        q.add(stringRequest)
-
-        binding.signOutButton.setOnClickListener {
-            val intent = Intent(activity, LoginActivity::class.java)
-            startActivity(intent)
-            // ini untuk tutup aktivitas di main
-            activity?.finish()
-        }
-
-        binding.btnChangePassword.setOnClickListener {
-            try {
-                val oldPass = binding.txtOldPassword.text.toString()
-                val newPass = binding.txtNewPassword.text.toString()
-                val confPass = binding.txtRedoPassword.text.toString()
-
-                // Memeriksa apakah semua field teks diisi
-                if (oldPass.isNotEmpty() && newPass.isNotEmpty() && confPass.isNotEmpty()) {
-
-                    // Memeriksa apakah password baru dan konfirmasi password sama
-                    if (newPass == confPass) {
-
-                        // Panggil web service untuk mengubah password
-                        val idUser = shared.getInt("id", 1) // Mengambil ID pengguna dari SharedPreferences
-                        Log.d("changePass", "ID Pengguna: $idUser")
-
-                        changePassword(idUser, oldPass, newPass)
-                    } else {
-                        throw Exception("Password baru dan konfirmasi password tidak sesuai")
-                    }
-                } else {
-                    throw Exception("Harap isi semua field teks")
-                }
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Terjadi kesalahan: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
+        observeViewModel()
 
         binding.darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
             Log.d("FragmentPrefs", "Before Dark Mode Change - isChecked: $isChecked")
@@ -138,37 +79,48 @@ class PrefFragment : Fragment() {
             }
         }
     }
-    private fun changePassword(idUser: Int, oldPassword: String, newPassword: String) {
-        val url = "https://ubaya.me/native/160421056/change_pass.php"
-        val requestQueue = Volley.newRequestQueue(requireContext())
 
-        val stringRequest = object : StringRequest(
-            Request.Method.POST, url,
-            Response.Listener<String> { response ->
-                val obj = JSONObject(response)
-                if (obj.getString("result") == "OK") {
-                    // Password berhasil diubah, Anda dapat menambahkan logika sesuai kebutuhan
-                    Toast.makeText(requireContext(), "Password berhasil diubah", Toast.LENGTH_SHORT).show()
-//                    val intent = Intent(requireContext(), FragmentPrefs2::class.java)
-//                    startActivity(intent)
+    private fun observeViewModel() {
+        viewModel.userLD.observe(viewLifecycleOwner, Observer {
+            binding.txtUsername.setText(viewModel.userLD.value?.username)
+
+            binding.user = it
+            binding.btnChangePassword?.setOnClickListener {
+                var oldPw = binding.txtOldPassword.text.toString()
+                var newPw = binding.txtNewPassword.text.toString()
+                var renewPw = binding.txtRedoPassword.text.toString()
+
+                if (!oldPw.isEmpty()&&!newPw.isEmpty()&&!renewPw.isEmpty()) {
+                    if (oldPw == binding.user!!.password.toString()) {
+                        if (newPw == renewPw) {
+                            binding.user!!.password = renewPw
+                            viewModel.updateUser(binding.user!!)
+                            Toast.makeText(activity, "User data successfully changed", Toast.LENGTH_SHORT).show()
+                            binding.txtOldPassword.setText("")
+                            binding.txtNewPassword.setText("")
+                            binding.txtRedoPassword.setText("")
+                        } else {
+                            Toast.makeText(activity, "New Password doesn't match with the reenter new password", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(activity, "Old password doesn't match with the inputted", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
-                    // Gagal mengubah password
-                    Toast.makeText(requireContext(), "Gagal mengubah password", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Please insert all data ", Toast.LENGTH_SHORT).show()
                 }
-            },
-            Response.ErrorListener { error ->
-                // Kesalahan koneksi atau server
-                Toast.makeText(requireContext(), "Terjadi kesalahan: ${error.message}", Toast.LENGTH_SHORT).show()
-            }) {
-
-            override fun getParams(): MutableMap<String, String> {
-                val params = HashMap<String, String>()
-                params["idUsers"] = idUser.toString()
-                params["old_password"] = oldPassword
-                params["new_password"] = newPassword
-                return params
             }
-        }
-        requestQueue.add(stringRequest)
+        })
+    }
+
+    override fun onButtonLogoutClick(v: View) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        sharedPreferences.edit().putBoolean("login", false).apply()
+        val logout = sharedPreferences.edit()
+        logout.remove("id_user")
+        logout.apply()
+
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
     }
 }

@@ -4,7 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="loginListener"
+            type="com.ubaya.anmp_uts.ButtonLoginListener" />
 
+        <variable
+            name="signUpListener"
+            type="com.ubaya.anmp_uts.ButtonSignUpListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

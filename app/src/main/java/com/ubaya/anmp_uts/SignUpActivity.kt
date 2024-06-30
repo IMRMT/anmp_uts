@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.Request
@@ -14,7 +15,7 @@ import com.ubaya.anmp_uts.model.User
 import com.ubaya.anmp_uts.viewmodel.UserViewModel
 import org.json.JSONObject
 
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity(), ButtonSignUpListener {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var viewModel: UserViewModel
     var accounts:ArrayList<User> = ArrayList()
@@ -26,28 +27,15 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel.fetchAll()
-        // error di sini, karena viewmodel alluserldnya null
-//        accounts = viewModel.allUserLD.value!!
 
-        binding.txtLog.setOnClickListener {
-            val intent = Intent(it.context, LoginActivity::class.java)
-            it.context.startActivity(intent)
-        }
-
-        binding.btnSignUp.setOnClickListener {
-            // Call the method to perform registration
-            registerUser()
-        }
+        binding.signUpListener = this
     }
 
-    private fun registerUser() {
+    override fun onButtonSignUpClick(v: View) {
         var username = binding.txtUserSignUp.text.toString()
         var password = binding.txtPassSignUp.text.toString()
         var repassword = binding.txtRePassword.text.toString()
         var uName = false
-
-//        val q = Volley.newRequestQueue(this)
-//        val url = "https://ubaya.me/native/160421056/register.php"
 
         for (account in accounts) {
             if (account.username == username) {

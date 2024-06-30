@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.Settings.Global
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +19,7 @@ import com.ubaya.anmp_uts.model.User
 import com.ubaya.anmp_uts.viewmodel.UserViewModel
 import org.json.JSONObject
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), ButtonLoginListener, ButtonSignUpListener {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: UserViewModel
     var accounts: ArrayList<User> = ArrayList()
@@ -39,72 +40,53 @@ class LoginActivity : AppCompatActivity() {
         }
 
         viewModel.fetchAll()
-        // error di sini, karena viewmodel alluserldnya null
-//        accounts = viewModel.allUserLD.value
 
+        binding.loginListener = this
+        binding.signUpListener = this
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
         viewModel.allUserLD.observe(this, Observer { user ->
             user?.let {
                 accounts = it as ArrayList<User>
             }
         })
-//        val t = Volley.newRequestQueue(this)
-//        val url = "https://ubaya.me/native/160421056/login.php"
+    }
 
-//        var stringRequest = StringRequest(
-//            Request.Method.POST, url,
-//            Response.Listener<String> {
-//                Log.d("apiresult", it)
-//                val obj = JSONObject(it)
-//                if (obj.getString("result") == "OK") {
-//                    val data = obj.getJSONArray("data")
-//                    val plyObj = data.getJSONObject(0)
-//                    val users = Account(
-//                        plyObj.getInt("id"),
-//                        plyObj.getString("username"),
-//                        plyObj.getString("password")
-//                    )
-//                    account.add(users)
-//                }
-//                Log.d("cekisiarray", account.toString())
-//            },
-//            Response.ErrorListener {
-//                // Handle error here
-//                Log.e("apiresult", it.message.toString())
-//            }
-//        )
-//        t.add(stringRequest)
-
-        binding.btnLogIn.setOnClickListener {
-            var username = binding.txtUserLogIn.text.toString()
-            var password = binding.txtPassLogIn.text.toString()
-            var status = false
-            if (username.isEmpty()||password.isEmpty()){
-                Toast.makeText(this,"Data cannot be empty", Toast.LENGTH_SHORT).show()
-            }else{
-                for (account in accounts) {
-                    if (account.username == username && account.password==password) {
-                        status = true
-                        Toast.makeText(this,"${username} Sign In Success", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, MainActivity::class.java)
-                        var idAccount = account.uuid
-                        sharedPreferences.edit().putBoolean("login", true).apply()
-                        sharedPreferences.edit().putInt("id_user", idAccount).apply()
-                        startActivity(intent)
-                        finish()
-                        break
-                    }
-                    else{
-                        status = false
-                    }
+    override fun onButtonLoginClick(v: View) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var username = binding.txtUserLogIn.text.toString()
+        var password = binding.txtPassLogIn.text.toString()
+        var status = false
+        if (username.isEmpty()||password.isEmpty()){
+            Toast.makeText(this,"Data cannot be empty", Toast.LENGTH_SHORT).show()
+        }else{
+            for (account in accounts) {
+                if (account.username == username && account.password==password) {
+                    status = true
+                    Toast.makeText(this,"${username} Sign In Success", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    var idAccount = account.uuid
+                    sharedPreferences.edit().putBoolean("login", true).apply()
+                    sharedPreferences.edit().putInt("id_user", idAccount).apply()
+                    startActivity(intent)
+                    finish()
+                    break
                 }
-                if (!status){
-                    Toast.makeText(this,"Username or password is incorrect", Toast.LENGTH_SHORT).show()
+                else{
+                    status = false
                 }
             }
+            if (!status){
+                Toast.makeText(this,"Username or password is incorrect", Toast.LENGTH_SHORT).show()
+            }
         }
-        binding.btnSignUpLogin.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
-        }
+    }
+
+    override fun onButtonSignUpClick(v: View) {
+        val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
     }
 }
