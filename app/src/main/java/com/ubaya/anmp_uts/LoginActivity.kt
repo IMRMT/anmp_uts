@@ -27,22 +27,24 @@ class LoginActivity : AppCompatActivity(), ButtonLoginListener, ButtonSignUpList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         val isLogin = sharedPreferences.getBoolean("login", false)
         if(isLogin){
+            Log.d("LoginActivity", "success")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }else{
-            setContentView(binding.root)
+            Log.d("LoginActivity", "failed")
+            binding.loginListener = this
+            binding.signUpListener = this
         }
 
         viewModel.fetchAll()
-
-        binding.loginListener = this
-        binding.signUpListener = this
 
         observeViewModel()
     }
@@ -51,17 +53,20 @@ class LoginActivity : AppCompatActivity(), ButtonLoginListener, ButtonSignUpList
         viewModel.allUserLD.observe(this, Observer { user ->
             user?.let {
                 accounts = it as ArrayList<User>
+                Log.d("LoginActivity", "Fetched users: $accounts")
             }
         })
     }
 
-    override fun onButtonLoginClick(v: View) {
+    override fun onButtonLoginClick(view: View) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         var username = binding.txtUserLogIn.text.toString()
         var password = binding.txtPassLogIn.text.toString()
         var status = false
+
         if (username.isEmpty()||password.isEmpty()){
             Toast.makeText(this,"Data cannot be empty", Toast.LENGTH_SHORT).show()
+            return
         }else{
             for (account in accounts) {
                 if (account.username == username && account.password==password) {
@@ -85,7 +90,7 @@ class LoginActivity : AppCompatActivity(), ButtonLoginListener, ButtonSignUpList
         }
     }
 
-    override fun onButtonSignUpClick(v: View) {
+    override fun onButtonSignUpClick(view: View) {
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
